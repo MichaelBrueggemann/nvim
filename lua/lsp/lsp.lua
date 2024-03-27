@@ -63,15 +63,18 @@ mason_lsp.setup({
 
 -- LSPs with custom configs
 lspconfig.jdtls.setup({
-    cmd = { "jdtls", "-data", "~/Repositories/sheepsmeadow" },
     on_attach = on_attach,
     capabilities = cmp_capabilities,
+    root_dir = lspconfig.util.root_pattern("pom.xml", "gradle.build", ".git"),
 })
+
+
+
 
 lspconfig.julials.setup({
     on_attach = on_attach,
     capabilities = cmp_capabilities,
-    -- cmd = vim.fn.system("julia --project -e 'using Pkg; Pkg.instantiate()'"),
+    cmd = {"julia", "--startup-file=no", "--history-file=no", "--project", "-e", "using Pkg; Pkg.instantiate()"}
 })
 
 -- overwrite Lua LSP setup
