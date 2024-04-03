@@ -37,8 +37,9 @@ return require('packer').startup(function(use)
 
     -- ATOM ONE DARK COLORSCHEME
     use "olimorris/onedarkpro.nvim"
-    
 
+    -- JULIA SPECIFIC LANGUAGE SUPPORT
+    use 'JuliaEditorSupport/julia-vim'
 
     -- MASON
     use
@@ -47,6 +48,9 @@ return require('packer').startup(function(use)
         'williamboman/mason-lspconfig.nvim',
         'neovim/nvim-lspconfig',
     }
+
+    -- SUPPORT FOR DEBUG ADAPTER PROTOCOL
+    use 'mfussenegger/nvim-dap'
 
     -- SNIPPET ENGINE
     use 'L3MON4D3/LuaSnip'
