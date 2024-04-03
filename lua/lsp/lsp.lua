@@ -15,6 +15,11 @@ mason.setup({
 
 -- Customized on_attach function
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
+local opts = { noremap = true, silent = true }
+vim.keymap.set('n', '<leader>d', vim.diagnostic.open_float, opts) -- open a floating buffer for LSP messages (Warnings, Errors, etc.)
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, opts)
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
@@ -36,10 +41,15 @@ local on_attach = function(client, bufnr)
         vim.lsp.buf.format { async = true }
         print("Formatting done!")
     end, opts)
-
+    vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, opts)
+    vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, opts)
+    vim.keymap.set('n', '<leader>wl', function()
+        print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+    end, opts)
 
     print("Language server started: " .. client.name)
 end
+
 
 local lspconfig = require('lspconfig')
 local lsp_capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -51,7 +61,6 @@ local cmp_capabilities = require("cmp_nvim_lsp").default_capabilities(lsp_capabi
 local lsp_servers = {
     'lua_ls',
     'julials',
-    'jdtls',
 }
 
 -- install lsps
@@ -60,21 +69,9 @@ mason_lsp.setup({
     automatic_installation = true,
 })
 
-
--- LSPs with custom configs
-lspconfig.jdtls.setup({
-    on_attach = on_attach,
-    capabilities = cmp_capabilities,
-    root_dir = lspconfig.util.root_pattern("pom.xml", "gradle.build", ".git"),
-})
-
-
-
-
 lspconfig.julials.setup({
     on_attach = on_attach,
     capabilities = cmp_capabilities,
-    cmd = {"julia", "--startup-file=no", "--history-file=no", "--project", "-e", "using Pkg; Pkg.instantiate()"}
 })
 
 -- overwrite Lua LSP setup
