@@ -12,7 +12,7 @@ harpoon:setup({
 -- REQUIRED
 
 -- KEYMAPS
-vim.keymap.set("n", "<leader>a", function() harpoon:list():append() end) -- add a buffer to the "harpoon list" (it will be findable by <C-e>)!
+vim.keymap.set("n", "<leader>a", function() harpoon:list():add() end) -- add a buffer to the "harpoon list" (it will be findable by <C-e>)!
 vim.keymap.set("n", "<C-e>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end) -- opens harpoon ui
 
 -- bindings to open the n-ths buffer attached to the "harpoon list" 
