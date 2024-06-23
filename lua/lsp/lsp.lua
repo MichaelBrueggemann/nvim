@@ -61,6 +61,8 @@ local cmp_capabilities = require("cmp_nvim_lsp").default_capabilities(lsp_capabi
 local lsp_servers = {
     'lua_ls',
     'julials',
+    'pylsp',
+    'clangd',
 }
 
 -- install lsps
@@ -69,10 +71,13 @@ mason_lsp.setup({
     automatic_installation = true,
 })
 
-lspconfig.julials.setup({
-    on_attach = on_attach,
-    capabilities = cmp_capabilities,
-})
+-- setup all lsp's listed in "lsp_servers", that share the same commen options
+for _, server in ipairs(lsp_servers) do
+    lspconfig[server].setup({
+        on_attach = on_attach,
+        capabilities = cmp_capabilities,
+    })
+end
 
 -- overwrite Lua LSP setup
 lspconfig.lua_ls.setup {
