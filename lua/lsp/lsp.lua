@@ -108,3 +108,15 @@ lspconfig.lua_ls.setup {
     on_attach = on_attach,
     capabilities = cmp_capabilities,
 }
+
+-- overwrite setup for tinymist LSP
+lspconfig.tinymist.setup {
+    filetype = {'typst'},
+    settings = {
+        formatterMode = "typstyle",
+        exportPdf = "onType",
+        semanticTokens = "disable"
+    },
+    on_attach = on_attach,
+    capabilities = cmp_capabilities,
+}

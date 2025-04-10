@@ -27,6 +27,13 @@ function is_command_available(cmd)
 end
 
 
+-- assigns the ".typ" filetype to "typst"
+vim.filetype.add({
+  extension = {
+    typ = "typst",
+  },
+})
+
 -- require setting files
 require_files("settings")
 
