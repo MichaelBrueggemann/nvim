@@ -16,10 +16,11 @@ local packer_bootstrap = ensure_packer()
 -- Reload configurations if we modify plugins.lua
 -- Hint
 --     <afile> - replaced with the filename of the buffer being manipulated
+-- everytime this file is saved, packer will delete unused packages and then install missing packages
 vim.cmd([[
   augroup packer_user_config
     autocmd!
-    autocmd BufWritePost plugins.lua source <afile> | PackerSync
+    autocmd BufWritePost plugins.lua source <afile> | PackerInstall | PackerClean
   augroup end
 ]])
 
@@ -36,7 +37,7 @@ return require('packer').startup(function(use)
     use { 'hrsh7th/cmp-cmdline' }
 
     -- open/close brackets
-    use 'm4xshen/autoclose.nvim'
+    --use 'm4xshen/autoclose.nvim'
 
     -- ATOM ONE DARK COLORSCHEME
     use "olimorris/onedarkpro.nvim"
@@ -103,7 +104,7 @@ return require('packer').startup(function(use)
     -- Automatically set up your configuration after cloning packer.nvim
     -- Put this at the end after all plugins
     if packer_bootstrap then
-        require('packer').sync()
+        require('packer').compile()
     end
 end
 )
