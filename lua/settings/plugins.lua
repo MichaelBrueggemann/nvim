@@ -46,9 +46,6 @@ require("lazy").setup({
   end,
 },
 
-  -- JULIA SPECIFIC LANGUAGE SUPPORT
-  { "JuliaEditorSupport/julia-vim" },
-
   -- MASON + LSP
   { "williamboman/mason.nvim" },
   { "williamboman/mason-lspconfig.nvim" },
