@@ -72,9 +72,6 @@ require("lazy").setup({
     dependencies = { "nvim-lua/plenary.nvim" },
   },
 
-  -- VIM SLIME (for interaction with REPLs)
-  { "jpalardy/vim-slime" },
-
   -- TREESITTER
   {
     "nvim-treesitter/nvim-treesitter",
