@@ -1,110 +1,99 @@
--- Install Packer automatically if it's not installed(Bootstraping)
-local ensure_packer = function()
-    local fn = vim.fn
-    local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
-    if fn.empty(fn.glob(install_path)) > 0 then
-        fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
-        vim.cmd [[packadd packer.nvim]]
-        return true
-    end
-    return false
+
+-- BOOTSTRAP: Install lazy.nvim automatically if not present
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable",
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
+
+-- Helper function to check if a command exists
+local function is_command_available(cmd)
+  return vim.fn.executable(cmd) == 1
 end
 
-local packer_bootstrap = ensure_packer()
+-- Plugin specification
+require("lazy").setup({
+  -- LAZY MANAGER ITSELF (not strictly necessary, but harmless)
+  { "folke/lazy.nvim" },
 
+  -- AUTOCOMPLETION
+  { "hrsh7th/nvim-cmp" },
+  { "hrsh7th/cmp-nvim-lsp" },
+  { "hrsh7th/cmp-buffer" },
+  { "hrsh7th/cmp-path" },
+  { "hrsh7th/cmp-cmdline" },
 
--- Reload configurations if we modify plugins.lua
--- Hint
---     <afile> - replaced with the filename of the buffer being manipulated
--- everytime this file is saved, packer will delete unused packages and then install missing packages
-vim.cmd([[
-  augroup packer_user_config
-    autocmd!
-    autocmd BufWritePost plugins.lua source <afile> | PackerInstall | PackerClean
-  augroup end
-]])
+  -- open/close brackets
+  -- { "m4xshen/autoclose.nvim" },
 
+  -- ATOM ONE DARK COLORSCHEME
+{
+  "olimorris/onedarkpro.nvim",
+  priority = 1000,
+  opts = {
+    options = {  }
+  },
+  config = function(_, opts)
+    require("onedarkpro").setup(opts)
+    vim.cmd.colorscheme("onedark")
+  end,
+},
 
-return require('packer').startup(function(use)
-    -- PACKER
-    use 'wbthomason/packer.nvim'
+  -- JULIA SPECIFIC LANGUAGE SUPPORT
+  { "JuliaEditorSupport/julia-vim" },
 
-    -- AUTOCOMPLETION
-    use { 'hrsh7th/nvim-cmp' }
-    use { 'hrsh7th/cmp-nvim-lsp' }
-    use { 'hrsh7th/cmp-buffer' }
-    use { 'hrsh7th/cmp-path' }
-    use { 'hrsh7th/cmp-cmdline' }
+  -- MASON + LSP
+  { "williamboman/mason.nvim" },
+  { "williamboman/mason-lspconfig.nvim" },
+  { "neovim/nvim-lspconfig" },
 
-    -- open/close brackets
-    --use 'm4xshen/autoclose.nvim'
+  -- SUPPORT FOR DEBUG ADAPTER PROTOCOL
+  { "mfussenegger/nvim-dap" },
 
-    -- ATOM ONE DARK COLORSCHEME
-    use "olimorris/onedarkpro.nvim"
+  -- SNIPPET ENGINE
+  { "L3MON4D3/LuaSnip" },
+  { "saadparwaiz1/cmp_luasnip" },
 
-    -- JULIA SPECIFIC LANGUAGE SUPPORT
-    use 'JuliaEditorSupport/julia-vim'
+  -- TELESCOPE
+  {
+    "nvim-telescope/telescope.nvim",
+    tag = "0.1.6",
+    dependencies = { "nvim-lua/plenary.nvim" },
+  },
 
-    -- MASON
-    use
-    {
-        'williamboman/mason.nvim',
-        'williamboman/mason-lspconfig.nvim',
-        'neovim/nvim-lspconfig',
-    }
+  -- HARPOON
+  {
+    "ThePrimeagen/harpoon",
+    branch = "harpoon2",
+    dependencies = { "nvim-lua/plenary.nvim" },
+  },
 
-    -- SUPPORT FOR DEBUG ADAPTER PROTOCOL
-    use 'mfussenegger/nvim-dap'
+  -- VIM SLIME (for interaction with REPLs)
+  { "jpalardy/vim-slime" },
 
-    -- SNIPPET ENGINE
-    use 'L3MON4D3/LuaSnip'
-    use 'saadparwaiz1/cmp_luasnip'
+  -- TREESITTER
+  {
+    "nvim-treesitter/nvim-treesitter",
+    build = ":TSUpdate",
+  },
 
-    -- TELESCOPE
-    use
-    {
-        'nvim-telescope/telescope.nvim', tag = '0.1.6', -- or, branch = '0.1.x',
-        requires = { { 'nvim-lua/plenary.nvim' } }
-    }
+  -- LAZYGIT (only if available)
+  (is_command_available("lazygit") and {
+    "kdheepak/lazygit.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+  }) or nil,
+})
 
-    -- HARPOON
-    use
-    {
-        "ThePrimeagen/harpoon",
-        branch = "harpoon2",
-        requires = { { "nvim-lua/plenary.nvim" } }
-    }
-
-    -- VIM SLIME (for interaction with REPLs)
-    use 'jpalardy/vim-slime'
-
-    -- TREESITTER
-    use
-    {
-        'nvim-treesitter/nvim-treesitter',
-        run = ':TSUpdate'
-    }
-
-    -- LAZYGIT
-    -- IMPORTANT: YOU NEED TO HAVE "lazygit" INSTALLED ON THE SYSTEM!
-    if is_command_available("lazygit") then
-        use
-        {
-            "kdheepak/lazygit.nvim",
-            -- optional for floating window border decoration
-            requires =
-            {
-                "nvim-lua/plenary.nvim",
-            },
-        }
-    else
-        print("'lazygit' isn't installed. Please install 'lazygit'")
-    end
-
-    -- Automatically set up your configuration after cloning packer.nvim
-    -- Put this at the end after all plugins
-    if packer_bootstrap then
-        require('packer').compile()
-    end
+-- Optionally, you can print a message if lazygit is not installed
+if not is_command_available("lazygit") then
+  vim.schedule(function()
+    vim.notify("'lazygit' isn't installed. Please install 'lazygit' for lazygit.nvim support.", vim.log.levels.WARN)
+  end)
 end
-)
