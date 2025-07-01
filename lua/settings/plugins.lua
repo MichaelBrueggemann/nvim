@@ -20,70 +20,70 @@ end
 
 -- Plugin specification
 require("lazy").setup({
-  -- LAZY MANAGER ITSELF (not strictly necessary, but harmless)
-  { "folke/lazy.nvim" },
+    -- LAZY MANAGER ITSELF (not strictly necessary, but harmless)
+    { "folke/lazy.nvim" },
 
-  -- AUTOCOMPLETION
-  { "hrsh7th/nvim-cmp" },
-  { "hrsh7th/cmp-nvim-lsp" },
-  { "hrsh7th/cmp-buffer" },
-  { "hrsh7th/cmp-path" },
-  { "hrsh7th/cmp-cmdline" },
+    -- AUTOCOMPLETION
+    { "hrsh7th/nvim-cmp" },
+    { "hrsh7th/cmp-nvim-lsp" },
+    { "hrsh7th/cmp-buffer" },
+    { "hrsh7th/cmp-path" },
+    { "hrsh7th/cmp-cmdline" },
 
-  -- open/close brackets
-  -- { "m4xshen/autoclose.nvim" },
+    -- open/close brackets
+    -- { "m4xshen/autoclose.nvim" },
 
-  -- ATOM ONE DARK COLORSCHEME
-{
-  "olimorris/onedarkpro.nvim",
-  priority = 1000,
-  opts = {
-    options = {  }
-  },
-  config = function(_, opts)
-    require("onedarkpro").setup(opts)
-    vim.cmd.colorscheme("onedark")
-  end,
-},
+    -- ATOM ONE DARK COLORSCHEME
+    {
+        "olimorris/onedarkpro.nvim",
+        priority = 1000,
+        opts = {
+          options = {  }
+        },
+        config = function(_, opts)
+          require("onedarkpro").setup(opts)
+          vim.cmd.colorscheme("onedark")
+        end,
+    },
 
-  -- MASON + LSP
-  { "williamboman/mason.nvim" },
-  { "williamboman/mason-lspconfig.nvim" },
-  { "neovim/nvim-lspconfig" },
+    -- MASON + LSP
+    { "williamboman/mason.nvim" },
+    { "williamboman/mason-lspconfig.nvim" },
+    { "neovim/nvim-lspconfig" },
 
-  -- SUPPORT FOR DEBUG ADAPTER PROTOCOL
-  { "mfussenegger/nvim-dap" },
+    -- SUPPORT FOR DEBUG ADAPTER PROTOCOL
+    { "mfussenegger/nvim-dap" },
 
-  -- SNIPPET ENGINE
-  { "L3MON4D3/LuaSnip" },
-  { "saadparwaiz1/cmp_luasnip" },
+    -- SNIPPET ENGINE
+    { "L3MON4D3/LuaSnip" },
+    { "saadparwaiz1/cmp_luasnip" },
 
-  -- TELESCOPE
-  {
-    "nvim-telescope/telescope.nvim",
-    tag = "0.1.6",
-    dependencies = { "nvim-lua/plenary.nvim" },
-  },
+    -- TELESCOPE
+    {
+        "nvim-telescope/telescope.nvim",
+        tag = "0.1.6",
+        dependencies = { "nvim-lua/plenary.nvim" },
+    },
 
-  -- HARPOON
-  {
-    "ThePrimeagen/harpoon",
-    branch = "harpoon2",
-    dependencies = { "nvim-lua/plenary.nvim" },
-  },
+    -- HARPOON
+    {
+        "ThePrimeagen/harpoon",
+        branch = "harpoon2",
+        dependencies = { "nvim-lua/plenary.nvim" },
+    },
 
-  -- TREESITTER
-  {
-    "nvim-treesitter/nvim-treesitter",
-    build = ":TSUpdate",
-  },
+    -- TREESITTER
+    {
+        "nvim-treesitter/nvim-treesitter",
+        build = ":TSUpdate",
+    },
 
-  -- LAZYGIT (only if available)
-  (is_command_available("lazygit") and {
-    "kdheepak/lazygit.nvim",
-    dependencies = { "nvim-lua/plenary.nvim" },
-  }) or nil,
-})
+    -- LAZYGIT (only if available)
+    (is_command_available("lazygit") and {
+        "kdheepak/lazygit.nvim",
+        dependencies = { "nvim-lua/plenary.nvim" },
+        }) or nil,
+    })
 
 -- Optionally, you can print a message if lazygit is not installed
 if not is_command_available("lazygit") then
