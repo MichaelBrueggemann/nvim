@@ -29,23 +29,3 @@ vim.keymap.set('n', 'mS', 'F[', keymap_opts) -- jump backwards
 vim.api.nvim_set_keymap('n', '<C-t>', ':vs +te<CR>', keymap_opts) -- open terminal with vertikal split
 vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-n>', keymap_opts)                -- go to "normal" mode with "Esc" while in "Terminal" mode
 
--- JULIA
-function startJuliaREPL()
-    -- Get current cursor position
-    local original_cursor = vim.api.nvim_win_get_cursor(0)
-
-    -- start a terminal instance
-    vim.cmd(":vsp | :terminal julia --project")
-
-    -- Go to the previous split
-    vim.cmd(":wincmd p")
-
-    vim.cmd(":SlimeConfig")
-
-    -- Restore cursor position
-    vim.api.nvim_win_set_cursor(0, original_cursor)
-end
-
-vim.api.nvim_set_keymap('n', '<Leader>jr',
-    ':lua startJuliaREPL()<CR>',
-    keymap_opts) -- open terminal with vertikal split
