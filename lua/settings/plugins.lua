@@ -31,7 +31,11 @@ require("lazy").setup({
     { "hrsh7th/cmp-cmdline" },
 
     -- open/close brackets
-    -- { "m4xshen/autoclose.nvim" },
+    {
+        "windwp/nvim-autopairs",
+        event = "InsertEnter",
+        config = true, -- Enables default setup
+    },
 
     -- ATOM ONE DARK COLORSCHEME
     {

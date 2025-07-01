@@ -1,5 +1,9 @@
 local cmp = require('cmp')
 
+-- integrate "nvim-autopairs" with the snippet engine
+local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
+
 local luasnip = require 'luasnip'
 
 cmp.setup({
