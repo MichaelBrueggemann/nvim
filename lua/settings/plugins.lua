@@ -83,7 +83,15 @@ require("lazy").setup({
         branch = "harpoon2",
         dependencies = { "nvim-lua/plenary.nvim" },
     },
-
+    
+    {
+      "nvim-tree/nvim-tree.lua",
+      version = "*",
+      lazy = false,
+      dependencies = {
+        "nvim-tree/nvim-web-devicons",
+      },
+    },
     -- TREESITTER
     {
         "nvim-treesitter/nvim-treesitter",
