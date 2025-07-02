@@ -90,6 +90,7 @@ require("lazy").setup({
       lazy = false,
       dependencies = {
         "nvim-tree/nvim-web-devicons",
+        -- NOTE: ADDITIONALLY THE FONT "Fira Code Nerd Font" needs to be installed and be enabled in the terminal emulator
       },
     },
     -- TREESITTER
