@@ -6,3 +6,7 @@ vim.g.loaded_netrwPlugin = 1
 vim.opt.termguicolors = true
 
 require("nvim-tree").setup()
+
+
+-- KEYMAPS
+vim.keymap.set('n', '<leader>t', ':NvimTreeToggle<CR>')
