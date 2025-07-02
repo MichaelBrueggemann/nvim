@@ -62,7 +62,8 @@ local lsp_servers = {
     'lua_ls',
     'pylsp',
     'clangd',
-    'tinymist'
+    'tinymist',
+    'typescript-language-server',
 }
 
 -- install lsps
