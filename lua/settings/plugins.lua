@@ -30,11 +30,19 @@ require("lazy").setup({
     { "hrsh7th/cmp-path" },
     { "hrsh7th/cmp-cmdline" },
 
-    -- open/close brackets
+    -- OPEN/CLOSE BRACKETS
     {
         "windwp/nvim-autopairs",
         event = "InsertEnter",
         config = true, -- Enables default setup
+    },
+
+    -- COMMENTS
+    {
+        'numToStr/Comment.nvim',
+        opts = {
+            -- add any options here
+        }
     },
 
     -- ATOM ONE DARK COLORSCHEME
