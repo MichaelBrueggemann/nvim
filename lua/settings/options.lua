@@ -30,4 +30,4 @@ vim.opt.ignorecase = true -- ignore case in searches by default
 vim.opt.smartcase = true  -- but make it case sensitive if an uppercase is entered
 
 -- Line Folding
-vim.wo.foldminlines = 10 -- only fold blocks that are longer than the stated number
+vim.wo.foldminlines = 30 -- only fold blocks that are longer than the stated number
