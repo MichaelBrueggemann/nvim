@@ -37,6 +37,13 @@ require("lazy").setup({
         config = true, -- Enables default setup
     },
 
+    -- TERMINAL INTERACTION
+    {
+        'akinsho/toggleterm.nvim', 
+        version = "*", 
+        config = true
+    },
+
     -- COMMENTS
     {
         'numToStr/Comment.nvim',

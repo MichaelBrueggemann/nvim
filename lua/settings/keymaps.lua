@@ -26,6 +26,6 @@ vim.keymap.set('n', 'mS', 'F[', keymap_opts) -- jump backwards
 
 
 -- TERMINAL
-vim.api.nvim_set_keymap('n', '<C-t>', ':vs +te<CR>', keymap_opts) -- open terminal with vertikal split
+-- vim.api.nvim_set_keymap('n', '<C-t>', ':vs +te<CR>', keymap_opts) -- open terminal with vertikal split
 vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-n>', keymap_opts)                -- go to "normal" mode with "Esc" while in "Terminal" mode
 
