@@ -64,6 +64,7 @@ local lsp_servers = {
     'clangd',
     'tinymist',
     'ts_ls',
+    'vue_ls',
 }
 
 -- install lsps
@@ -82,7 +83,7 @@ end
 
 -- overwrite setup for tinymist LSP
 lspconfig.tinymist.setup {
-    filetype = {'typst'},
+    filetype = { 'typst' },
     settings = {
         formatterMode = "typstyle",
         exportPdf = "onType",
@@ -91,3 +92,37 @@ lspconfig.tinymist.setup {
     on_attach = on_attach,
     capabilities = cmp_capabilities,
 }
+
+-- overwrite setup for typescript LSP
+lspconfig.ts_ls.setup {
+    filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
+    on_attach = on_attach,
+    capabilities = cmp_capabilities,
+    init_options = {
+        plugins = {
+            {
+                name = '@vue/typescript-plugin',
+                location = vim.fn.stdpath 'data' .. '/mason/packages/vue-language-server/node_modules/@vue/language-server',
+                languages = { 'vue' },
+            },
+        },
+    },
+    settings = {
+        typescript = {
+            tsserver = {
+                useSyntaxServer = false,
+            },
+            inlayHints = {
+                includeInlayParameterNameHints = 'all',
+                includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+                includeInlayFunctionParameterTypeHints = true,
+                includeInlayVariableTypeHints = true,
+                includeInlayVariableTypeHintsWhenTypeMatchesName = true,
+                includeInlayPropertyDeclarationTypeHints = true,
+                includeInlayFunctionLikeReturnTypeHints = true,
+                includeInlayEnumMemberValueHints = true,
+            },
+        },
+    },
+}
+
