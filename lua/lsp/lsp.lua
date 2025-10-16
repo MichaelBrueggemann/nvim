@@ -12,7 +12,6 @@ mason.setup({
     }
 })
 
-
 -- Customized on_attach function
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 local opts = { noremap = true, silent = true }
@@ -63,8 +62,6 @@ local lsp_servers = {
     'pylsp',
     'clangd',
     'tinymist',
-    'ts_ls',
-    'vue_ls',
 }
 
 -- install lsps
@@ -92,37 +89,3 @@ lspconfig.tinymist.setup {
     on_attach = on_attach,
     capabilities = cmp_capabilities,
 }
-
--- overwrite setup for typescript LSP
-lspconfig.ts_ls.setup {
-    filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue' },
-    on_attach = on_attach,
-    capabilities = cmp_capabilities,
-    init_options = {
-        plugins = {
-            {
-                name = '@vue/typescript-plugin',
-                location = vim.fn.stdpath 'data' .. '/mason/packages/vue-language-server/node_modules/@vue/language-server',
-                languages = { 'vue' },
-            },
-        },
-    },
-    settings = {
-        typescript = {
-            tsserver = {
-                useSyntaxServer = false,
-            },
-            inlayHints = {
-                includeInlayParameterNameHints = 'all',
-                includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-                includeInlayFunctionParameterTypeHints = true,
-                includeInlayVariableTypeHints = true,
-                includeInlayVariableTypeHintsWhenTypeMatchesName = true,
-                includeInlayPropertyDeclarationTypeHints = true,
-                includeInlayFunctionLikeReturnTypeHints = true,
-                includeInlayEnumMemberValueHints = true,
-            },
-        },
-    },
-}
-
